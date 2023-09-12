@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Column, Grid, Breadcrumb, BreadcrumbItem } from '@carbon/react'
-
 import { useNavigate } from 'react-router-dom';
 import PolicyTable from './PolicyTable'
 import axios from 'axios'
@@ -53,6 +52,20 @@ const InternalPolicy = () => {
         console.error(error);
       });
   }, []);
+
+
+
+
+  const transformedPolicies = allPolicies.map(policy => ({
+    id: policy._id, // Use the unique identifier for each policy
+    privacyNoticeName: policy.privacyNoticeName,
+    privacyNoticeStatus: policy.privacyNoticeStatus,
+    privacyNoticeOwner: policy.privacyNoticeOwner,
+    privacyNoticeCreatedBy: policy.privacyNoticeCreatedBy,
+    privacyNoticelastModifiedTime: policy.privacyNoticelastModifiedTime,
+    privacyNoticeOrganisation: policy.privacyNoticeOrganisation,
+  }));
+
   return (
     <div>
       <div>
@@ -70,10 +83,10 @@ const InternalPolicy = () => {
         </div>
       </div>
       <div style={{ margin: '1rem' }}>
-        <PolicyTable headers={headerData} rows={allPolicies} />
+        <PolicyTable headers={headerData} rows={transformedPolicies} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default InternalPolicy
+export default InternalPolicy;

@@ -1,13 +1,33 @@
 import { Column, Grid, Breadcrumb, BreadcrumbItem, Button, Tabs, TabList, Tab, TabPanels, TabPanel } from '@carbon/react'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import DetailsTab from './PolicyViewTabs/DetailsTab';
 import BuilderTab from './PolicyViewTabs/BuilderTab';
 import LayoutTab from './PolicyViewTabs/LayoutTab';
 import SettingsTab from './PolicyViewTabs/SettingsTab';
+import axios from 'axios';
 
 const PolicyView = () => {
   const navigate = useNavigate();
+  const params=useParams();
+
+  const [policyView, setPolicyView] = useState([]);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "http://216.48.189.160:1114/privacyNotice/get",
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        const policy = response.data.find((item) => item._id === params.id);
+        setPolicyView(policy);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
   return (
     <div>
       <div>
@@ -36,7 +56,7 @@ const PolicyView = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <DetailsTab/>
+              <DetailsTab data={policyView}/>
             </TabPanel>
             <TabPanel>
               <BuilderTab/>

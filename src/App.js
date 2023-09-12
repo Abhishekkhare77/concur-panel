@@ -150,7 +150,7 @@ function App() {
             <NewInternalPolicy/>
           </LayoutPagesLayout>
         }/>
-        <Route path='/policyview' element={
+        <Route path='/policyview/:id' element={
           <PolicyPageLayout>
             <PolicyView/>
           </PolicyPageLayout>

@@ -62,46 +62,89 @@ const CreatePrivacyNotice = () => {
     };
 
 
-    const handleAddPolicy = () => {
-        const noticeName = document.getElementById('name').value; // Get the Section Name from the input
-        const defaultLanguage = document.getElementById('select-1').value; // Get the Default Language from the select input
-        const mainUser = document.getElementById('mainUser').value; // Get the Description from the textarea
+    const validateForm = () => {
+        let isValid = true;
+        const noticeName = document.getElementById('name').value;
+        const mainUser = document.getElementById('mainUser').value;
         const description = document.getElementById('description').value;
-        // Create an object with the data to send in the POST request
-        const postData = {
-            privacyNoticeLayout: layout,
-            privacyNoticeName: noticeName,
-            privacyNoticeOrganisation: "Catax",
-            privacyNoticedefaultLanguage: defaultLanguage,
-            privacyNoticeLanguages: [],
-            privacyNoticeDescription: description,
-            privacyNoticeNoticeTags: tags.join(', '),
-            privacyNoticeOwner: mainUser,
-            privacyNoticeCreatedBy: "John Doe",
-            privacyNoticeUpdatedBy: "John Doe",
-            privacyNoticetemplateId: [templateId],
-            privacyNoticeSection: [
-                "string"
-            ]
-        };
+        const tags = document.getElementById('tags').value;
 
-        // Define the URL where you want to send the POST request
-        const url = 'http://216.48.189.160:1114/privacyNotice/create'; // Replace with your API endpoint
+        // Validation for Notice Name
+        if (noticeName.trim() === '') {
+            isValid = false;
+            // Display an error message for the Notice Name field
+            document.getElementById('name-error').innerText = 'Please enter a valid Notice Name';
+        } else {
+            document.getElementById('name-error').innerText = ''; // Clear the error message
+        }
 
-        // Make the POST request
-        axios
-            .post(url, postData)
-            .then((response) => {
-                // Handle the successful response here
-                console.log('Response:', response.data);
-                // Close the modal after a successful POST
-            })
-            .catch((error) => {
-                // Handle any errors that occurred during the request
-                console.error('Error:', error);
-            });
+        // Validation for Main User
+        if (mainUser.trim() === '') {
+            isValid = false;
+            // Display an error message for the Main User field
+            document.getElementById('mainUser-error').innerText = 'Please enter a valid Main User';
+        } else {
+            document.getElementById('mainUser-error').innerText = ''; // Clear the error message
+        }
+
+        // Validation for Description
+        if (description.trim() === '') {
+            isValid = false;
+            // Display an error message for the Description field
+            document.getElementById('description-error').innerText = 'Please enter a valid Description';
+        } else {
+            document.getElementById('description-error').innerText = ''; // Clear the error message
+        }
+
+        return isValid;
     };
 
+
+    const handleAddPolicy = () => {
+
+        if (validateForm()) {
+            const noticeName = document.getElementById('name').value; // Get the Section Name from the input
+            const defaultLanguage = document.getElementById('select-1').value; // Get the Default Language from the select input
+            const mainUser = document.getElementById('mainUser').value; // Get the Description from the textarea
+            const description = document.getElementById('description').value;
+            // Create an object with the data to send in the POST request
+            const postData = {
+                privacyNoticeLayout: layout,
+                privacyNoticeName: noticeName,
+                privacyNoticeOrganisation: "Catax",
+                privacyNoticedefaultLanguage: defaultLanguage,
+                privacyNoticeLanguages: [],
+                privacyNoticeDescription: description,
+                privacyNoticeNoticeTags: tags.join(', '),
+                privacyNoticeOwner: mainUser,
+                privacyNoticeCreatedBy: "John Doe",
+                privacyNoticeUpdatedBy: "John Doe",
+                privacyNoticetemplateId: [templateId],
+                privacyNoticeSection: [
+                    "string"
+                ]
+            };
+
+            // Define the URL where you want to send the POST request
+            const url = 'http://216.48.189.160:1114/privacyNotice/create'; // Replace with your API endpoint
+
+            // Make the POST request
+            axios
+                .post(url, postData)
+                .then((response) => {
+                    // Handle the successful response here
+                    console.log('Response:', response.data);
+                    navigate('/privacynotices')
+                    // Close the modal after a successful POST
+                })
+                .catch((error) => {
+                    // Handle any errors that occurred during the request
+                    console.error('Error:', error);
+                });
+        } else {
+            // Form validation failed; do not submit the form
+        }
+    }
     const handleNextStep = () => {
         if (step < 3) {
             setStep((prevStep) => prevStep + 1);
@@ -225,21 +268,33 @@ const CreatePrivacyNotice = () => {
             bodyContent = (
                 <div style={{ marginTop: '1rem', width: '50vw' }}>
                     <Stack gap={5}>
-                        <TextInput id="name" type="text" labelText="Name" />
-                        <Select id="select-1" defaultValue="English" labelText="Default language">
+                        <div>
+                            <TextInput id="name" type="text" labelText="Name *" required />
+                            <p id="name-error" style={{ color: 'red' }}></p>
+                        </div>
+                        <Select id="select-1" defaultValue="English" labelText="Default language *" required>
                             <SelectItem value="English" text="English" />
                             <SelectItem value="Hindi" text="Hindi" />
                         </Select>
-                        <TextInput id="mainUser" type="text" labelText="Main User" />
-                        <TextInput id="description" type="text" labelText="Description" />
-                        <TextInput
-                            id="tags"
-                            type="text"
-                            labelText="Tags"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyUp={handleKeyPress}
-                        />
+                        <div>
+                            <TextInput id="mainUser" type="text" labelText="Main User *"  required/>
+                            <p id="mainUser-error" style={{ color: 'red' }}></p>
+                        </div>
+                        <div>
+                            <TextInput id="description" type="text" labelText="Description *" required />
+                            <p id="description-error" style={{ color: 'red' }}></p>
+                        </div>
+                        <div>
+                            <TextInput
+                                id="tags"
+                                type="text"
+                                labelText="Tags"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyUp={handleKeyPress}
+                            />
+                            <p id="tags-error" style={{ color: 'red' }}></p>
+                        </div>
                         <div>
                             {tags.map((item, index) => (
                                 <Tag className="some-class" type="high-contrast" title="Clear Filter" key={index}>
@@ -293,9 +348,8 @@ const CreatePrivacyNotice = () => {
                     <Button onClick={handleNextStep}>Next</Button>
                 )}
                 {step === 3 && (
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         handleAddPolicy()
-                        navigate('/privacynotices')
                     }
                     }>Complete</Button>
                 )}
