@@ -28,6 +28,8 @@ const PolicyView = () => {
         console.error(error);
       });
   }, []);
+
+  console.log(policyView)
   return (
     <div>
       <div>
@@ -59,7 +61,7 @@ const PolicyView = () => {
               <DetailsTab data={policyView}/>
             </TabPanel>
             <TabPanel>
-              <BuilderTab/>
+              <BuilderTab data={policyView}/>
             </TabPanel>
             <TabPanel>
               <LayoutTab/>

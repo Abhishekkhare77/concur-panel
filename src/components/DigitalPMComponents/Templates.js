@@ -2,12 +2,15 @@ import { Column, Grid, Breadcrumb, BreadcrumbItem, ClickableTile, Button, Modal,
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { BsArrowUpRight } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom';
 
 const Templates = () => {
   const [open, setOpen] = useState(false);
   const [activeToInactive, setActiveToInactive] = useState(false);
   const [inactiveToActive, setInactiveToActive] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null); // Track the selected template
+
+  const navigate = useNavigate();
 
   const toggleActivation = (templateIndex) => {
     if (templateIndex !== null) {
@@ -70,6 +73,7 @@ const Templates = () => {
         console.log('Response:', response.data);
         // Close the modal after a successful POST
         setOpen(false);
+        navigate(0);
       })
       .catch((error) => {
         // Handle any errors that occurred during the request

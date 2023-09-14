@@ -31,7 +31,7 @@ const SectionTemplatesTable = ({ rows, headers }) => {
           {rows.map((row) => (
             <TableRow key={row.id}>
               {row.cells.map((cell) => (
-                <TableCell onClick={()=>{navigate('/policyview')}} key={cell.id}>{cell.value}</TableCell>
+                <TableCell onClick={()=>{navigate(`/policyview/${cell.id}`)}} key={cell.id}>{cell.value}</TableCell>
               ))}
             </TableRow>
           ))}
