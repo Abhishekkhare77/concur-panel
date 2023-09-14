@@ -141,7 +141,7 @@ const Templates = () => {
             <img src="https://cdn-icons-png.flaticon.com/512/2343/2343640.png" alt="icon" style={{ height: '70px', width: '70px' }} />
             <div style={{ position: 'absolute', bottom: '.5rem', left: '.5rem' }}>
               <Tag className="some-class" type="high-contrast" title="Clear Filter">
-                {template.privacyNoticeNoticeTags}
+                Custom
               </Tag>
               {template.active ? (
                 <Button size='sm' onClick={() => setInactiveToActive(true)}>Deactivate</Button>

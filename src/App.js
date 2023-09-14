@@ -20,12 +20,9 @@ import DPOStudio from './pages/layout_pages/DPOStudio/DPOStudio';
 import OrganizationTraining from './pages/layout_pages/OrganizationTraining/OrganizationTraining';
 import SettingsNav from './pages/layout_pages/Settings/SettingsNav';
 import PrivacyNotices from './components/DigitalPMComponents/PrivacyNotices';
-import NewInternalPolicy from './components/DigitalPMComponents/NewInternalPolicy';
 import PolicyView from './components/DigitalPMComponents/PolicyView';
-import EditPolicySection from './components/DigitalPMComponents/EditPolicySection';
 import DataSources from './pages/layout_pages/DataSources/DataSources';
 import DataDiscovery from './pages/layout_pages/DataDiscovery/DataDiscovery';
-import ChoosePolicyType from './components/DigitalPMComponents/ChoosePolicyType';
 import DataCatalog from './pages/layout_pages/DataCatalog/DataCatalog';
 import RoPA from './pages/layout_pages/RoPA/RoPA';
 import MobileAppConsent from './pages/layout_pages/MobileAppConsent/MobileAppConsent';
@@ -34,6 +31,7 @@ import PolicyPageLayout from './layouts/PolicyPageLayout';
 import CreatePrivacyNotice from './components/DigitalPMComponents/CreatePrivacyNotice';
 import Templates from './components/DigitalPMComponents/Templates';
 import SectionTemplates from './components/DigitalPMComponents/SectionTemplates';
+import SectionDetails from './components/DigitalPMComponents/SectionDetails';
 
 function App() {
   return (
@@ -66,135 +64,124 @@ function App() {
         } />
         <Route path='/onboarding' element={
           <LayoutPagesLayout>
-            <Onboarding/>
+            <Onboarding />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/apps' element={
           <LayoutPagesLayout>
-            <AppPage/>
+            <AppPage />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/getstarted' element={
           <LayoutPagesLayout>
-            <GetStartedPage/>
+            <GetStartedPage />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/datalifecyclemanagement' element={
           <LayoutPagesLayout>
-            <DataLifeCycleManagement/>
+            <DataLifeCycleManagement />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/dataprinciplemanagement' element={
           <LayoutPagesLayout>
-            <DataPrincipleManagement/>
+            <DataPrincipleManagement />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/consent' element={
           <LayoutPagesLayout>
-            <ConsentPage/>
+            <ConsentPage />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/parentalconsent' element={
           <LayoutPagesLayout>
-            <ParentalConsent/>
+            <ParentalConsent />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/digitalpolicymanagement' element={
           <LayoutPagesLayout>
-            <DigitalPolicyManagement/>
+            <DigitalPolicyManagement />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/noticemanagement' element={
           <LayoutPagesLayout>
-            <NoticeManagement/>
+            <NoticeManagement />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/dpostudio' element={
           <LayoutPagesLayout>
-            <DPOStudio/>
+            <DPOStudio />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/organizationtraining' element={
           <LayoutPagesLayout>
-            <OrganizationTraining/>
+            <OrganizationTraining />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/settings' element={
           <LayoutPagesLayout>
-            <SettingsNav/>
+            <SettingsNav />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/privacynotices' element={
           <PolicyPageLayout>
-            <PrivacyNotices/>
+            <PrivacyNotices />
           </PolicyPageLayout>
-        }/>
+        } />
         <Route path='/createprivacynotice' element={
           <PolicyPageLayout>
-            <CreatePrivacyNotice/>
+            <CreatePrivacyNotice />
           </PolicyPageLayout>
-        }/>
+        } />
         <Route path='/templates' element={
           <PolicyPageLayout>
-            <Templates/>
+            <Templates />
           </PolicyPageLayout>
-        }/>
+        } />
         <Route path='/sectiontemplates' element={
           <PolicyPageLayout>
-            <SectionTemplates/>
+            <SectionTemplates />
           </PolicyPageLayout>
-        }/>
-
-        <Route path='/newinternalpolicy' element={
-          <LayoutPagesLayout>
-            <NewInternalPolicy/>
-          </LayoutPagesLayout>
-        }/>
+        } />
+        <Route path='/sectiondetails/:id' element={
+          <PolicyPageLayout>
+            <SectionDetails />
+          </PolicyPageLayout>
+        } />
         <Route path='/policyview/:id' element={
           <PolicyPageLayout>
-            <PolicyView/>
+            <PolicyView />
           </PolicyPageLayout>
-        }/>
-        <Route path='/editpolicysection' element={
-          <LayoutPagesLayout>
-            <EditPolicySection/>
-          </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/datasources' element={
           <LayoutPagesLayout>
-            <DataSources/>
+            <DataSources />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/datadiscovery' element={
           <LayoutPagesLayout>
-            <DataDiscovery/>
+            <DataDiscovery />
           </LayoutPagesLayout>
-        }/>
-        <Route path='/choosepolicytype' element={
-          <LayoutPagesLayout>
-            <ChoosePolicyType/>
-          </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/datacatalog' element={
           <LayoutPagesLayout>
-            <DataCatalog/>
+            <DataCatalog />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/ropa' element={
           <LayoutPagesLayout>
-            <RoPA/>
+            <RoPA />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/mobileappconsent' element={
           <LayoutPagesLayout>
-            <MobileAppConsent/>
+            <MobileAppConsent />
           </LayoutPagesLayout>
-        }/>
+        } />
         <Route path='/webappconsent' element={
           <LayoutPagesLayout>
-            <WebAppConsent/>
+            <WebAppConsent />
           </LayoutPagesLayout>
-        }/>
+        } />
       </Routes>
     </BrowserRouter>
   );
