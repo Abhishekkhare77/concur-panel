@@ -28,8 +28,6 @@ const PolicyView = () => {
         console.error(error);
       });
   }, []);
-
-  console.log(policyView)
   return (
     <div>
       <div>

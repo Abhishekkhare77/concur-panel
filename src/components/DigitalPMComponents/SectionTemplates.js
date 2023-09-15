@@ -39,7 +39,6 @@ const SectionTemplates = () => {
         axios
             .request(options)
             .then(function (response) {
-                console.log(response.data)
                 setAllSectionTemplates(response.data);
             })
             .catch(function (error) {
@@ -47,8 +46,7 @@ const SectionTemplates = () => {
             });
     }, []);
 
-
-
+    console.log(allSectionTemplates);
 
     const transformedSectionTemplates = allSectionTemplates.map(section => ({
         id: section._id, // Use the unique identifier for each policy
@@ -93,7 +91,7 @@ const SectionTemplates = () => {
             .post(url, postData)
             .then((response) => {
                 // Handle the successful response here
-                console.log('Response:', response.data);
+                console.log(response.data)
                 // Close the modal after a successful POST
                 setOpen(false);
                 navigate(0);

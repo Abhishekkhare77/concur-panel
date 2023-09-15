@@ -10,7 +10,7 @@ import {
   HeaderContainer, Theme, Header, HeaderMenuButton, HeaderGlobalAction, HeaderName, HeaderNavigation
 } from "@carbon/react";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const Fade16 = () => (
   <svg
     width="16"
@@ -26,6 +26,8 @@ const Fade16 = () => (
 const PolicyPageLayout = (props) => {
 
   const navigate = useNavigate();
+  const page = window.location.href;
+  console.log(page);
   return (
     <div>
       <HeaderContainer
@@ -75,10 +77,10 @@ const PolicyPageLayout = (props) => {
                   expanded={isSideNavExpanded}
                 >
                   <SideNavItems>
-                    <SideNavMenuItem aria-current="page" href="/privacynotices">Privacy Notices</SideNavMenuItem>
-                    <SideNavMenuItem href="/templates">Templates</SideNavMenuItem>
+                    <SideNavMenuItem isActive={page === "http://localhost:3000/privacynotices"} href="/privacynotices">Privacy Notices</SideNavMenuItem>
+                    <SideNavMenuItem href="/templates" isActive={page === "http://localhost:3000/templates"}>Templates</SideNavMenuItem>
                     <SideNavMenu renderIcon={Fade16} title="Setup">
-                      <SideNavMenuItem href="/sectiontemplates">Section Templates</SideNavMenuItem>
+                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/sectiontemplates">Section Templates</SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavItems>
                 </SideNav>

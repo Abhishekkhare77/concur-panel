@@ -34,7 +34,6 @@ const Templates = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response.data);
         setAllTemplateData(response.data)
       })
       .catch(function (error) {
@@ -59,7 +58,7 @@ const Templates = () => {
       privacyNoticeCreatedBy: "John doe",
       privacyNoticeUpdatedBy: "string",
       privacyNoticetemplateId: [],
-      privacyNoticeSection: [sectionName], // Use the Section Name as a section
+      privacyNoticeSection: [], // Use the Section Name as a section
     };
 
     // Define the URL where you want to send the POST request
@@ -70,7 +69,6 @@ const Templates = () => {
       .post(url, postData)
       .then((response) => {
         // Handle the successful response here
-        console.log('Response:', response.data);
         // Close the modal after a successful POST
         setOpen(false);
         navigate(0);
@@ -156,24 +154,22 @@ const Templates = () => {
         {inactiveToActive && <Modal open modalHeading="Activate Template" modalLabel="Activate Template" primaryButtonText="Activate" secondaryButtonText="Cancel" onRequestClose={() => {
           toggleActivation(selectedTemplate)
           setInactiveToActive(false)
-        }}>
+        }} onRequestSubmit={() => toggleActivation(selectedTemplate)}>
           <p style={{
             marginBottom: '1rem'
           }}>
             Are you sure you want to activate this template?
           </p>
-          <Button onClick={() => toggleActivation(selectedTemplate)}>Activate</Button>
         </Modal>}
         {activeToInactive && <Modal open modalHeading="Deactivate Template" modalLabel="Deactivate Template" primaryButtonText="Deactivate" secondaryButtonText="Cancel" onRequestClose={() => {
           toggleActivation(selectedTemplate)
           setActiveToInactive(false)
-        }}>
+        }} onRequestSubmit={() => toggleActivation(selectedTemplate)}>
           <p style={{
             marginBottom: '1rem'
           }}>
             Are you sure you want to deactivate this template?
           </p>
-          <Button onClick={() => toggleActivation(selectedTemplate)}>Deactivate</Button>
         </Modal>}
       </div>
     </div>

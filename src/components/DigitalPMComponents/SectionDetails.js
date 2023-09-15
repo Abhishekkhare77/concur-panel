@@ -1,8 +1,37 @@
-import { TabList, TabPanel, TabPanels } from '@carbon/react'
-import { Breadcrumb, Column, Grid ,BreadcrumbItem, Button, Tabs, Tab} from 'carbon-components-react'
+import axios from 'axios'
+import { Breadcrumb, Column, Grid ,BreadcrumbItem, Button, Tabs, Tab, TabList, TabPanel, TabPanels } from 'carbon-components-react'
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import SectionDetailsTab from './SectionDetailTabs/SectionDetailsTab'
+import SectionBuilderTab from './SectionDetailTabs/SectionBuilderTab'
 
 const SectionDetails = () => {
+    const {id} = useParams();
+    const newId = id.split(":")[0];
+
+    const [sectionDetails, setSectionDetails] = useState([]);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "http://216.48.189.160:1114/policySection/get_all",
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        const section = response.data.find((item) => item._id === newId);
+        setSectionDetails(section);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [newId]);
+
+
+  console.log("section details is: ",sectionDetails);
+
   return (
     <div>
       <div>
@@ -17,22 +46,19 @@ const SectionDetails = () => {
           </Column>
         </Grid>
       </div>
-      <div style={{ position: 'absolute', top: '8vh', right: '1rem' }}>
-        <Button onClick={() => {  }}>Publish</Button>
-        <Button kind="secondary" onClick={() => {  }}>Save</Button>
-      </div>
       <div className="some-container" style={{ marginLeft: '3rem', marginTop: '1rem' }}>
         <Tabs>
           <TabList aria-label="List of tabs" contained>
             <Tab>Details</Tab>
             <Tab>Builder</Tab>
           </TabList>
+          <hr />
           <TabPanels>
             <TabPanel>
-              Details Tab
+              <SectionDetailsTab data={sectionDetails}/>
             </TabPanel>
             <TabPanel>
-              Builder Tab
+              <SectionBuilderTab data={sectionDetails}/>
             </TabPanel>
           </TabPanels>
         </Tabs>
