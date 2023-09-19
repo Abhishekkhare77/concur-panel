@@ -32,6 +32,8 @@ import CreatePrivacyNotice from './components/DigitalPMComponents/CreatePrivacyN
 import Templates from './components/DigitalPMComponents/Templates';
 import SectionTemplates from './components/DigitalPMComponents/SectionTemplates';
 import SectionDetails from './components/DigitalPMComponents/SectionDetails';
+import TemplateDetails from './components/DigitalPMComponents/TemplateDetails';
+import DataDiscoveryLayout from './layouts/DataDiscoveryLayout';
 
 function App() {
   return (
@@ -137,6 +139,11 @@ function App() {
             <Templates />
           </PolicyPageLayout>
         } />
+        <Route path='/templatedetails/:id' element={
+          <PolicyPageLayout>
+            <TemplateDetails />
+          </PolicyPageLayout>
+        } />
         <Route path='/sectiontemplates' element={
           <PolicyPageLayout>
             <SectionTemplates />
@@ -158,9 +165,9 @@ function App() {
           </LayoutPagesLayout>
         } />
         <Route path='/datadiscovery' element={
-          <LayoutPagesLayout>
+          <DataDiscoveryLayout>
             <DataDiscovery />
-          </LayoutPagesLayout>
+          </DataDiscoveryLayout>
         } />
         <Route path='/datacatalog' element={
           <LayoutPagesLayout>

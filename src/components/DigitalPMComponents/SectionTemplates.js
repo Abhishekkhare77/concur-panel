@@ -80,7 +80,9 @@ const SectionTemplates = () => {
             sectionDefaultLanguage: defaultLanguage,
             sectionIcon: "string",
             sectionContent: {},
-            sectionLanguages: []
+            sectionLanguages: [],
+            sectionPublishedTime: Date.now(),
+            sectiontype: "Custom"
         };
 
         // Define the URL where you want to send the POST request

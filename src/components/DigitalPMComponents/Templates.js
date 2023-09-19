@@ -8,21 +8,10 @@ const Templates = () => {
   const [open, setOpen] = useState(false);
   const [activeToInactive, setActiveToInactive] = useState(false);
   const [inactiveToActive, setInactiveToActive] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState(null); // Track the selected template
+
+  const [activation,setActivation] = useState("Activated")
 
   const navigate = useNavigate();
-
-  const toggleActivation = (templateIndex) => {
-    if (templateIndex !== null) {
-      // Toggle the activation status of the selected template
-      allTemplateData[templateIndex].active = !allTemplateData[templateIndex].active;
-      // Close the modal
-      setOpen(false);
-      setActiveToInactive(false);
-      setInactiveToActive(false);
-      setSelectedTemplate(null); // Reset the selected template
-    }
-  };
 
   const [allTemplateData, setAllTemplateData] = useState([]);
   useEffect(() => {
@@ -79,6 +68,7 @@ const Templates = () => {
       });
   };
 
+
   return (
     <div>
       <Grid fullWidth>
@@ -118,7 +108,6 @@ const Templates = () => {
             <TextArea labelText="Description" rows={4} placeholder='Section description' />
           </Modal>}
 
-
         </div>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', margin: "1rem 3rem" }}>
@@ -126,7 +115,7 @@ const Templates = () => {
           <ClickableTile
             key={index}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', height: '250px', width: '250px' }}
-            href={'#'}
+            href={`/templatedetails/${template._id}`}
           >
             <div style={{ position: 'absolute', top: '1px', right: '1px' }}>
               <a rel="noreferrer" target='_blank' href="https://www.zomato.com/policies/terms-of-service/"><BsArrowUpRight size={24} /></a>
@@ -142,9 +131,14 @@ const Templates = () => {
                 Custom
               </Tag>
               {template.active ? (
-                <Button size='sm' onClick={() => setInactiveToActive(true)}>Deactivate</Button>
+                <Button size='sm' onClick={(event) => {
+                  event.preventDefault()
+                  setInactiveToActive(true)
+                }}>{activation}</Button>
               ) : (
-                <Button size='sm' onClick={() => setActiveToInactive(true)}>Activate</Button>
+                <Button size='sm' onClick={(event) => {
+                  event.preventDefault()
+                  setActiveToInactive(true)}}>{activation}</Button>
               )}
             </div>
           </ClickableTile>
@@ -152,9 +146,11 @@ const Templates = () => {
       </div>
       <div>
         {inactiveToActive && <Modal open modalHeading="Activate Template" modalLabel="Activate Template" primaryButtonText="Activate" secondaryButtonText="Cancel" onRequestClose={() => {
-          toggleActivation(selectedTemplate)
           setInactiveToActive(false)
-        }} onRequestSubmit={() => toggleActivation(selectedTemplate)}>
+        }} onRequestSubmit={() => {
+          setInactiveToActive(false)
+          setActivation("Activated")
+          }}>
           <p style={{
             marginBottom: '1rem'
           }}>
@@ -162,9 +158,11 @@ const Templates = () => {
           </p>
         </Modal>}
         {activeToInactive && <Modal open modalHeading="Deactivate Template" modalLabel="Deactivate Template" primaryButtonText="Deactivate" secondaryButtonText="Cancel" onRequestClose={() => {
-          toggleActivation(selectedTemplate)
           setActiveToInactive(false)
-        }} onRequestSubmit={() => toggleActivation(selectedTemplate)}>
+        }} onRequestSubmit={() => {
+          setActiveToInactive(false)
+          setActivation("Deactivated")
+          }}>
           <p style={{
             marginBottom: '1rem'
           }}>

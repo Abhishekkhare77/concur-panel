@@ -22,19 +22,21 @@ const SectionBuilderTab = (props) => {
     const handleUpdateSectionContent = () => {
         // Prepare the data for the PATCH request
         const updatedSection = {
-            ...section,
+            // ...section,
+            // sectionPublishTime:Date.now(),
+            // sectiontype:'Custom',
             sectionContent: editorHtml, // Update the sectionContent field
         };
 
         // Define the URL for the PATCH request
-        const url = `http://216.48.189.160:1114/policySection/patch?_id=${section._id}`; // Replace with your API endpoint
+        const url = `http://216.48.189.160:1114/policySection/patch?id=${section._id}`; // Replace with your API endpoint
 
         // Make the PATCH request
         axios
             .patch(url, updatedSection,{
                 headers: {
                   'Content-Type': 'application/json', // Set the content type to JSON
-                },
+                }
               })
             .then((response) => {
                 // Handle the successful response here
@@ -42,10 +44,41 @@ const SectionBuilderTab = (props) => {
             })
             .catch((error) => {
                 // Handle any errors that occurred during the request
-                console.error('Error updating section:', error);
+                console.error('Error updating section:', error.config.data);
             });
     };
+    const handleUpdateSectionPublishTime = () => {
+        // Prepare the data for the PATCH request
+        const updatedSection = {
+            // ...section,
+            sectionPublishedTime:Date.now(),
+            // sectiontype:'Custom',
+            // sectionContent: editorHtml, // Update the sectionContent field
+        };
 
+        // Define the URL for the PATCH request
+        const url = `http://216.48.189.160:1114/policySection/patch?id=${section._id}`; // Replace with your API endpoint
+
+        // Make the PATCH request
+        axios
+            .patch(url, updatedSection,{
+                headers: {
+                  'Content-Type': 'application/json', // Set the content type to JSON
+                }
+              })
+            .then((response) => {
+                // Handle the successful response here
+                console.log('Section updated successfully:', response.data);
+            })
+            .catch((error) => {
+                // Handle any errors that occurred during the request
+                console.error('Error updating section:', error.config.data);
+            });
+    };
+    useEffect(() => {
+        setEditorHtml(section.sectionContent);
+      }, [section.sectionContent]); 
+      
 
     return (
         <div style={{ display: 'flex', gap: '10px',marginLeft:"-1rem" }}>
@@ -53,12 +86,15 @@ const SectionBuilderTab = (props) => {
                 <ClickableTile >
                     {section.sectionName}
                 </ClickableTile>
+                
+
             </div>
             <div style={{ position: 'absolute', top: '8vh', right: '1rem' }}>
+                <Button kind="primary" onClick={handleUpdateSectionPublishTime}>Publish</Button>
                 <Button kind="secondary" onClick={handleUpdateSectionContent}>Save</Button>
             </div>
             <div style={{ width: '80%', border: '1px solid gray', padding: '1rem' }}>
-                <>
+                <div>
                     <ContainedList label={section.sectionName} kind="on-page">
                         <ContainedListItem>
                             <ReactQuill
@@ -72,7 +108,7 @@ const SectionBuilderTab = (props) => {
                             />
                         </ContainedListItem>
                     </ContainedList>
-                </>
+                </div>
             </div>
         </div>
     )
