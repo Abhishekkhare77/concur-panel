@@ -62,6 +62,7 @@ const TemplateBuilderTab = (props) => {
             setSelectSectionTemplate(false);
             setOpen(true);
         }
+        setSelectedOption(1);
     }
     
 
@@ -141,10 +142,33 @@ const TemplateBuilderTab = (props) => {
 
     
     console.log(currentSectionId)
+   
 
-    const handleSelectedTemplate = ()=>{
-       
-    }
+    const addSectionToTemplate = () => {
+        const updatedSection = {
+           ...template,
+            privacyNoticeSection: template.privacyNoticeSection.push(currentSectionId.split(":")[0]), // Update the sectionContent field
+        };
+
+        // Define the URL for the PATCH request
+        const url = `http://216.48.189.160:1114/privacyNoticeTemplate/${template._id}`; // Replace with your API endpoint
+
+        // Make the PATCH request
+        axios
+            .patch(url, updatedSection,{
+                headers: {
+                  'Content-Type': 'application/json', // Set the content type to JSON
+                }
+              })
+            .then((response) => {
+                // Handle the successful response here
+                console.log('Section added to template successfully:', response.data);
+            })
+            .catch((error) => {
+                // Handle any errors that occurred during the request
+                console.error('Error updating section:', error.config.data);
+            });
+      };
 
     
 
@@ -166,7 +190,9 @@ const TemplateBuilderTab = (props) => {
 
             <div>
                 {/* Modal 1 */}
-                {selectSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Add new section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => setSelectSectionTemplate(false)} onRequestSubmit={handleSelection}>
+                {selectSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Add new section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => {
+                    setSelectedOption(1);
+                    setSelectSectionTemplate(false)}} onRequestSubmit={handleSelection}>
                     <RadioButtonGroup legendText="Choose From below: " name="radio-button-group" defaultSelected="radio-1">
                         <RadioButton labelText="Select From Section Template" value="radio-1" id="radio-1" onClick={()=>setSelectedOption(1)} />
                         <RadioButton labelText="Create new custom section" value="radio-2" id="radio-2" onClick={()=>setSelectedOption(2)}/>
@@ -177,7 +203,7 @@ const TemplateBuilderTab = (props) => {
 
             <div>
                 {/* Modal 2 */}
-            {selectFromSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Custom Section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => setSelectFromSectionTemplate(false)} onRequestSubmit={() => {}}>
+            {selectFromSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Custom Section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => setSelectFromSectionTemplate(false)} onRequestSubmit={addSectionToTemplate}>
             <div style={{ margin: '1rem' }}>
                 <SectionTemplatesTableModal headers={headerData} rows={transformedSectionTemplates} sectionId={currentSectionId} setCurrentSectionId={setCurrentSectionId} />
             </div>
