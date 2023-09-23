@@ -77,21 +77,21 @@ const DataDiscoveryLayout = (props) => {
                   expanded={isSideNavExpanded}
                 >
                   <SideNavItems>
-                    <SideNavMenuItem href="/controlcenter">Control Center</SideNavMenuItem>
-                    <SideNavMenuItem href="/gallery" isActive={page === "http://localhost:3000/templates"}>Gallery</SideNavMenuItem>
+                    {/* <SideNavMenuItem href="/controlcenter">Control Center</SideNavMenuItem> */}
+                    <SideNavMenuItem href="/gallery" isActive={page === "http://localhost:3000/gallery"}>Gallery</SideNavMenuItem>
                     <SideNavMenu renderIcon={Fade16} title="Setup">
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/workernodes">Worker Nodes</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/datasources">Data Sources</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/credentials">Credentials</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/scanprofiles">Scan Profiles</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/classifiers">Classifiers</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/classificationprofiles">Classification Profiles</SideNavMenuItem>
-                      <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/automationrules">Automation Rules</SideNavMenuItem>
+                      <SideNavMenuItem isActive={page === "http://localhost:3000/workernodes"} href="/workernodes">Worker Nodes</SideNavMenuItem>
+                      {/* <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/datasources">Data Sources</SideNavMenuItem> */}
+                      <SideNavMenuItem isActive={page === "http://localhost:3000/credentials"} href="/credentials">Credentials</SideNavMenuItem>
+                      {/* <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/scanprofiles">Scan Profiles</SideNavMenuItem> */}
+                      <SideNavMenuItem isActive={page === "http://localhost:3000/classifiers"} href="/classifiers">Classifiers</SideNavMenuItem>
+                      {/* <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/classificationprofiles">Classification Profiles</SideNavMenuItem> */}
+                      {/* <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/automationrules">Automation Rules</SideNavMenuItem> */}
                     </SideNavMenu>
-                    <SideNavMenu renderIcon={Fade16} title="Discovery Review">
+                    {/* <SideNavMenu renderIcon={Fade16} title="Discovery Review">
                       <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/workernodes">Terms</SideNavMenuItem>
                       <SideNavMenuItem isActive={page === "http://localhost:3000/sectiontemplates"} href="/datasources">Status Tracker</SideNavMenuItem>
-                    </SideNavMenu>
+                    </SideNavMenu> */}
                   </SideNavItems>
                 </SideNav>
               </Header>

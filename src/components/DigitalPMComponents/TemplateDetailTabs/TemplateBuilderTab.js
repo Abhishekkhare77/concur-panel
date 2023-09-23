@@ -12,7 +12,6 @@ import SectionTemplatesTableModal from './SectionTemplateTableModal';
 
 const TemplateBuilderTab = (props) => {
     const template = props.data;
-    console.log("Template is:", template.privacyNoticeSection)
 
     const [sectionDetails, setSectionDetails] = useState([]);
 
@@ -66,6 +65,10 @@ const TemplateBuilderTab = (props) => {
     }
     
 
+    
+    
+    const [currentSectionId,setCurrentSectionId] = useState('');
+
     const navigate = useNavigate();
 
     const handleAddSectionTemplate = () => {
@@ -99,16 +102,18 @@ const TemplateBuilderTab = (props) => {
             .post(url, postData)
             .then((response) => {
                 // Handle the successful response here
-                console.log(response.data)
+                console.log("This is the response of add section post data ,, the id is:",response)
+                // setCurrentSectionId(response.data);
                 // Close the modal after a successful POST
                 setOpen(false);
-                navigate(0);
+                // navigate(0);
             })
             .catch((error) => {
                 // Handle any errors that occurred during the request
                 console.error('Error:', error);
             });
     };
+
 
 
     const [allSectionTemplates, setAllSectionTemplates] = useState([]);
@@ -137,17 +142,12 @@ const TemplateBuilderTab = (props) => {
         sectionDefaultLanguage: section.sectionDefaultLanguage,
         sectionPublishedTime: section.sectionPublishedTime,
     }));
-
-    const [currentSectionId,setCurrentSectionId] = useState('');
-
-    
-    console.log(currentSectionId)
    
 
     const addSectionToTemplate = () => {
         const updatedSection = {
            ...template,
-            privacyNoticeSection: template.privacyNoticeSection.push(currentSectionId.split(":")[0]), // Update the sectionContent field
+           privacyNoticeSection: [...template.privacyNoticeSection, currentSectionId], // Update the sectionContent field
         };
 
         // Define the URL for the PATCH request
@@ -164,6 +164,7 @@ const TemplateBuilderTab = (props) => {
                 // Handle the successful response here
                 console.log('Section added to template successfully:', response.data);
             })
+            
             .catch((error) => {
                 // Handle any errors that occurred during the request
                 console.error('Error updating section:', error.config.data);
@@ -171,6 +172,67 @@ const TemplateBuilderTab = (props) => {
       };
 
     
+      console.log("This is the seciton details",sectionDetails);
+
+
+    //   const handleUpdateSectionContent = () => {
+    //     // Prepare the data for the PATCH request
+    //     const updatedSection = {
+    //         ...sectionDetails,
+    //         // sectionPublishTime:Date.now(),
+    //         // sectiontype:'Custom',
+    //         sectionContent: sectionDetails.sectionContent, // Update the sectionContent field
+    //     };
+
+    //     // Define the URL for the PATCH request
+    //     const url = `http://216.48.189.160:1114/policySection/patch?id=${sectionDetails._id}`; // Replace with your API endpoint
+
+    //     // Make the PATCH request
+    //     axios
+    //         .patch(url, updatedSection,{
+    //             headers: {
+    //               'Content-Type': 'application/json', // Set the content type to JSON
+    //             }
+    //           })
+    //         .then((response) => {
+    //             // Handle the successful response here
+    //             console.log('Section updated successfully:', response.data);
+    //         })
+    //         .catch((error) => {
+    //             // Handle any errors that occurred during the request
+    //             console.error('Error updating section:', error.config.data);
+    //         });
+    // };
+
+    const handleUpdateSectionContent = () => {
+        // Iterate through all the sections
+        sectionDetails.forEach((section, index) => {
+            // Prepare the data for the PATCH request
+            const updatedSection = {
+                // ...section,
+                sectionContent: sectionDetails[index].sectionContent, // Update the sectionContent field
+            };
+    
+            // Define the URL for the PATCH request (use the appropriate URL for your API)
+            const url = `http://216.48.189.160:1114/policySection/patch?id=${section._id}`;
+    
+            // Make the PATCH request for each section
+            axios
+                .patch(url, updatedSection, {
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                })
+                .then((response) => {
+                    // Handle the successful response here
+                    console.log(`Section ${section.sectionName} updated successfully:`, response.data);
+                })
+                .catch((error) => {
+                    // Handle any errors that occurred during the request
+                    console.error(`Error updating section ${section.sectionName}:`, error.config.data);
+                });
+        });
+    };
 
     return (
         <div style={{ display: 'flex', gap: '10px', marginLeft: "-1rem" }}>
@@ -228,7 +290,7 @@ const TemplateBuilderTab = (props) => {
 
             <div style={{ position: 'absolute', top: '8vh', right: '1rem' }}>
                 <Button kind="primary" onClick={() => { }}>Publish</Button>
-                <Button kind="secondary" onClick={() => { }}>Save</Button>
+                <Button kind="secondary" onClick={handleUpdateSectionContent}>Save</Button>
             </div>
 
 

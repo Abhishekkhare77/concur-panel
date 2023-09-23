@@ -15,7 +15,7 @@ const SectionDetails = () => {
   useEffect(() => {
     const options = {
       method: "GET",
-      url: "http://216.48.189.160:1114/policySection/get_all",
+      url: "http://216.48.189.160:1114/policySection/get_all_templates",
     };
 
     axios

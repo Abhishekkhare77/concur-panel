@@ -34,6 +34,11 @@ import SectionTemplates from './components/DigitalPMComponents/SectionTemplates'
 import SectionDetails from './components/DigitalPMComponents/SectionDetails';
 import TemplateDetails from './components/DigitalPMComponents/TemplateDetails';
 import DataDiscoveryLayout from './layouts/DataDiscoveryLayout';
+import WorkerNodes from './components/DataDiscovery/WorkerNodes/WorkerNodes';
+import Credentials from './components/DataDiscovery/Credentials/Credentials';
+import Classifiers from './components/DataDiscovery/Classifiers/Classifiers';
+import Gallery from './components/DataDiscovery/Gallery/Gallery';
+import AddCredentials from './components/DataDiscovery/Credentials/AddCredentials';
 
 function App() {
   return (
@@ -167,6 +172,31 @@ function App() {
         <Route path='/datadiscovery' element={
           <DataDiscoveryLayout>
             <DataDiscovery />
+          </DataDiscoveryLayout>
+        } />
+        <Route path='/workernodes' element={
+          <DataDiscoveryLayout>
+            <WorkerNodes />
+          </DataDiscoveryLayout>
+        } />
+        <Route path='/credentials' element={
+          <DataDiscoveryLayout>
+            <Credentials />
+          </DataDiscoveryLayout>
+        } />
+        <Route path='addcredentials' element={
+          <DataDiscoveryLayout>
+            <AddCredentials />
+          </DataDiscoveryLayout>
+        } />
+        <Route path='/classifiers' element={
+          <DataDiscoveryLayout>
+            <Classifiers />
+          </DataDiscoveryLayout>
+        } />
+        <Route path='/gallery' element={
+          <DataDiscoveryLayout>
+            <Gallery />
           </DataDiscoveryLayout>
         } />
         <Route path='/datacatalog' element={

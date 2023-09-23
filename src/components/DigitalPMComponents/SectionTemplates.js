@@ -33,7 +33,7 @@ const SectionTemplates = () => {
     useEffect(() => {
         const options = {
             method: "GET",
-            url: "http://216.48.189.160:1114/policySection/get_all",
+            url: "http://216.48.189.160:1114/policySection/get_all_templates",
         };
 
         axios
@@ -81,12 +81,10 @@ const SectionTemplates = () => {
             sectionIcon: "string",
             sectionContent: {},
             sectionLanguages: [],
-            sectionPublishedTime: Date.now(),
-            sectiontype: "Custom"
         };
 
         // Define the URL where you want to send the POST request
-        const url = 'http://216.48.189.160:1114/policySection/post'; // Replace with your API endpoint
+        const url = 'http://216.48.189.160:1114/policySectionTemplate/post'; // Replace with your API endpoint
 
         // Make the POST request
         axios
