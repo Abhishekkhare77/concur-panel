@@ -306,7 +306,7 @@ const TemplateBuilderTab = (props) => {
                                     formats={TemplateBuilderTab.formats}
                                     bounds={'.app'}
                                     placeholder={props.placeholder}
-                                    style={{ height: '10vh', marginBottom: '2rem' }}
+                                    style={{ height: '40vh', marginBottom: '2rem' }}
                                 />
                             </ContainedListItem>
                         ))}
