@@ -49,25 +49,25 @@ const TemplateBuilderTab = (props) => {
 
     const [open, setOpen] = useState(false);
     const [selectSectionTemplate, setSelectSectionTemplate] = useState(false);
-    const [selectFromSectionTemplate,setSelectFromSectionTemplate] = useState(false);
+    const [selectFromSectionTemplate, setSelectFromSectionTemplate] = useState(false);
 
 
-    const [selectedOption,setSelectedOption] = useState(1);
-    const handleSelection = ()=>{
-        if(selectedOption === 1){
+    const [selectedOption, setSelectedOption] = useState(1);
+    const handleSelection = () => {
+        if (selectedOption === 1) {
             setSelectSectionTemplate(false);
             setSelectFromSectionTemplate(true);
-        }else if(selectedOption === 2){
+        } else if (selectedOption === 2) {
             setSelectSectionTemplate(false);
             setOpen(true);
         }
         setSelectedOption(1);
     }
-    
 
-    
-    
-    const [currentSectionId,setCurrentSectionId] = useState('');
+
+
+
+    const [currentSectionId, setCurrentSectionId] = useState('');
 
     const navigate = useNavigate();
 
@@ -102,7 +102,7 @@ const TemplateBuilderTab = (props) => {
             .post(url, postData)
             .then((response) => {
                 // Handle the successful response here
-                console.log("This is the response of add section post data ,, the id is:",response)
+                console.log("This is the response of add section post data ,, the id is:", response)
                 // setCurrentSectionId(response.data);
                 // Close the modal after a successful POST
                 setOpen(false);
@@ -120,7 +120,7 @@ const TemplateBuilderTab = (props) => {
     useEffect(() => {
         const options = {
             method: "GET",
-            url: "http://216.48.189.160:1114/policySection/get_all",
+            url: "http://216.48.189.160:1114/policySection/get_all_templates",
         };
 
         axios
@@ -142,67 +142,41 @@ const TemplateBuilderTab = (props) => {
         sectionDefaultLanguage: section.sectionDefaultLanguage,
         sectionPublishedTime: section.sectionPublishedTime,
     }));
-   
+
 
     const addSectionToTemplate = () => {
-        const updatedSection = {
-           ...template,
-           privacyNoticeSection: [...template.privacyNoticeSection, currentSectionId], // Update the sectionContent field
-        };
+        if (currentSectionId) {
+            // Clone the template and update the privacyNoticeSection field
+            const updatedTemplate = {
+                ...template,
+                privacyNoticeSection: [...template.privacyNoticeSection, currentSectionId],
+            };
 
-        // Define the URL for the PATCH request
-        const url = `http://216.48.189.160:1114/privacyNoticeTemplate/${template._id}`; // Replace with your API endpoint
+            // Define the URL for the PATCH request
+            const url = `http://216.48.189.160:1114/privacyNoticeTemplate/${template._id}`;
 
-        // Make the PATCH request
-        axios
-            .patch(url, updatedSection,{
-                headers: {
-                  'Content-Type': 'application/json', // Set the content type to JSON
-                }
-              })
-            .then((response) => {
-                // Handle the successful response here
-                console.log('Section added to template successfully:', response.data);
-            })
-            
-            .catch((error) => {
-                // Handle any errors that occurred during the request
-                console.error('Error updating section:', error.config.data);
-            });
-      };
+            // Make the PATCH request
+            axios
+                .patch(url, updatedTemplate, {
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                })
+                .then((response) => {
+                    // Handle the successful response here
+                    console.log('Section added to template successfully:', response.data);
+                })
+                .catch((error) => {
+                    // Handle any errors that occurred during the request
+                    console.error('Error updating section:', error.config.data);
+                });
+        } else {
+            console.error('No section template selected.'); // Handle this case as needed
+        }
+    };
 
-    
-      console.log("This is the seciton details",sectionDetails);
 
-
-    //   const handleUpdateSectionContent = () => {
-    //     // Prepare the data for the PATCH request
-    //     const updatedSection = {
-    //         ...sectionDetails,
-    //         // sectionPublishTime:Date.now(),
-    //         // sectiontype:'Custom',
-    //         sectionContent: sectionDetails.sectionContent, // Update the sectionContent field
-    //     };
-
-    //     // Define the URL for the PATCH request
-    //     const url = `http://216.48.189.160:1114/policySection/patch?id=${sectionDetails._id}`; // Replace with your API endpoint
-
-    //     // Make the PATCH request
-    //     axios
-    //         .patch(url, updatedSection,{
-    //             headers: {
-    //               'Content-Type': 'application/json', // Set the content type to JSON
-    //             }
-    //           })
-    //         .then((response) => {
-    //             // Handle the successful response here
-    //             console.log('Section updated successfully:', response.data);
-    //         })
-    //         .catch((error) => {
-    //             // Handle any errors that occurred during the request
-    //             console.error('Error updating section:', error.config.data);
-    //         });
-    // };
+    console.log("This is the seciton details", sectionDetails);
 
     const handleUpdateSectionContent = () => {
         // Iterate through all the sections
@@ -212,10 +186,10 @@ const TemplateBuilderTab = (props) => {
                 // ...section,
                 sectionContent: sectionDetails[index].sectionContent, // Update the sectionContent field
             };
-    
+
             // Define the URL for the PATCH request (use the appropriate URL for your API)
             const url = `http://216.48.189.160:1114/policySection/patch?id=${section._id}`;
-    
+
             // Make the PATCH request for each section
             axios
                 .patch(url, updatedSection, {
@@ -234,6 +208,8 @@ const TemplateBuilderTab = (props) => {
         });
     };
 
+    console.log("The current Section Id is:", currentSectionId)
+
     return (
         <div style={{ display: 'flex', gap: '10px', marginLeft: "-1rem" }}>
 
@@ -249,15 +225,15 @@ const TemplateBuilderTab = (props) => {
                 </ClickableTile>
             </div>
 
-
             <div>
                 {/* Modal 1 */}
                 {selectSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Add new section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => {
                     setSelectedOption(1);
-                    setSelectSectionTemplate(false)}} onRequestSubmit={handleSelection}>
+                    setSelectSectionTemplate(false)
+                }} onRequestSubmit={handleSelection}>
                     <RadioButtonGroup legendText="Choose From below: " name="radio-button-group" defaultSelected="radio-1">
-                        <RadioButton labelText="Select From Section Template" value="radio-1" id="radio-1" onClick={()=>setSelectedOption(1)} />
-                        <RadioButton labelText="Create new custom section" value="radio-2" id="radio-2" onClick={()=>setSelectedOption(2)}/>
+                        <RadioButton labelText="Select From Section Template" value="radio-1" id="radio-1" onClick={() => setSelectedOption(1)} />
+                        <RadioButton labelText="Create new custom section" value="radio-2" id="radio-2" onClick={() => setSelectedOption(2)} />
                     </RadioButtonGroup>
                 </Modal>}
             </div>
@@ -265,10 +241,10 @@ const TemplateBuilderTab = (props) => {
 
             <div>
                 {/* Modal 2 */}
-            {selectFromSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Custom Section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => setSelectFromSectionTemplate(false)} onRequestSubmit={addSectionToTemplate}>
-            <div style={{ margin: '1rem' }}>
-                <SectionTemplatesTableModal headers={headerData} rows={transformedSectionTemplates} sectionId={currentSectionId} setCurrentSectionId={setCurrentSectionId} />
-            </div>
+                {selectFromSectionTemplate && <Modal open modalHeading="Create Custom Template Section" modalLabel="Custom Section" primaryButtonText="Select" secondaryButtonText="Cancel" onRequestClose={() => setSelectFromSectionTemplate(false)} onRequestSubmit={addSectionToTemplate}>
+                    <div style={{ margin: '1rem' }}>
+                        <SectionTemplatesTableModal headers={headerData} rows={transformedSectionTemplates} sectionId={currentSectionId} setCurrentSectionId={setCurrentSectionId} />
+                    </div>
                 </Modal>}
             </div>
 

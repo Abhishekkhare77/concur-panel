@@ -46,6 +46,8 @@ const BuilderTab = (props) => {
         fetchTemplates();
     }, [props.data.privacyNoticetemplateId]);
 
+
+
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
@@ -89,15 +91,42 @@ const BuilderTab = (props) => {
             });
     };
 
+    console.log(templates);
+    const [sectionDetails, setSectionDetails] = useState([]);
 
+    useEffect(() => {
+        // Base API URL
+        const apiUrl = "http://216.48.189.160:1114/policySection/get";
+
+        // Check if template.privacyNoticeSection is defined
+        if (templates && templates.privacyNoticeSection) {
+            // Create an array of axios GET requests for each ID
+            const requests = templates.privacyNoticeSection.map((id) =>
+                axios.get(apiUrl, { params: { id } }) // Construct URL with the ID parameter
+            );
+
+            // Use Promise.all to fetch data for all items in parallel
+            Promise.all(requests)
+                .then((responses) => {
+                    // Filter out any responses that don't have data
+                    const sections = responses
+                        .filter((response) => response.data)
+                        .map((response) => response.data);
+                    setSectionDetails(sections);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, [templates]); // Dependency on template
 
     return (
         <div style={{ display: 'flex', gap: '10px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '20%', border: '1px solid gray', padding: '1rem' }}>
                 
-            {templates.map((template, index) => (
+            {sectionDetails.map((section, index) => (
                     <ClickableTile key={index}>
-                        {template.privacyNoticeSection}
+                        {section.sectionName}
                     </ClickableTile>
                 ))}
                 <ClickableTile light onClick={() => setOpen((currState) => !currState)}>

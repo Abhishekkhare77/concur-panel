@@ -46,14 +46,25 @@ const Classifiers = () => {
   }, []);
 
 
+  console.log("This is the list of all classifiers", allClassifiers);
 
+  const transformedClassifiers = allClassifiers.map(item => ({
+    // id: classify._id, // Use the unique identifier for each policy
+    // classifierType: classify.classifierType,
+    // status: classify.status,
+    // createdBy: classify.createdBy,
+    // createdOn: new Date(classify.createdOn),
 
-  const transformedClassifiers = allClassifiers.map(classify => ({
-    id: classify._id, // Use the unique identifier for each policy
-    classifierType: classify.classifierType,
-    status: classify.status,
-    createdBy: classify.createdBy,
-    createdOn: classify.createdOn,
+    id: item._id,
+    classifierType: item.classifierType,
+    classifierDescription: item.classifierDescription,
+    createdOn: new Date(item.createdOn), // Convert datetime string to JavaScript Date object
+    createdBy: item.createdBy,
+    lastUpdatedOn: new Date(item.lastUpdatedOn), // Convert datetime string to JavaScript Date object
+    publishedOn: new Date(item.publishedOn), // Convert datetime string to JavaScript Date object
+    publishedBy: item.publishegBy, // Note the typo in your data: 'publishegBy' instead of 'publishedBy'
+    status: item.status,
+    dataElementCount: item.dataElementCount || [], // Handle missing dataElementCount
   }));
 
   return (

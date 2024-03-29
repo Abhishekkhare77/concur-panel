@@ -35,7 +35,7 @@ const CredentialsTable = ({ rows, headers }) => {
                       key={cell.id}
                       onClick={() => {
                         // Pass the unique policy ID or relevant data to the navigation
-                        navigate(`/policyview/${row.id}`);
+                        navigate(`/credentialview/${row.id}`);
                       }}
                     >
                       {cell.value}

@@ -17,7 +17,7 @@ export const headerData = [
   },
   {
     key: 'createdOn',
-    header: 'Created On',
+    header: 'Created Date',
   }
 ];
 
@@ -40,8 +40,6 @@ const Credentials = () => {
         console.error(error);
       });
   }, []);
-
-
 
 
   const transformedCredentails = allCredentials.map(cred => ({

@@ -184,6 +184,11 @@ function App() {
             <Credentials />
           </DataDiscoveryLayout>
         } />
+        <Route path='/credentials' element={
+          <DataDiscoveryLayout>
+            <Credentials />
+          </DataDiscoveryLayout>
+        } />
         <Route path='addcredentials' element={
           <DataDiscoveryLayout>
             <AddCredentials />
